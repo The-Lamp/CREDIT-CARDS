@@ -172,3 +172,47 @@ themeButton.addEventListener('click', () => {
     localStorage.setItem('selected-theme', getCurrentTheme())
     localStorage.setItem('selected-icon', getCurrentIcon())
 })
+
+document.addEventListener("DOMContentLoaded", function () {
+        const video = document.getElementById("video-file");
+        const videoButton = document.getElementById("video-button");
+        const videoIcon = document.getElementById("video-icon");
+
+        // Intersection Observer to play video when in view
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        video.play();
+                    } else {
+                        video.pause();
+                    }
+                });
+            },
+            {
+                threshold: 0.5, // Adjust this value as needed
+            }
+        );
+
+        observer.observe(video);
+
+        // Play/Pause video with button
+        videoButton.addEventListener("click", () => {
+            if (video.paused) {
+                video.play();
+                videoIcon.classList.replace("ri-play-line", "ri-pause-line");
+            } else {
+                video.pause();
+                videoIcon.classList.replace("ri-pause-line", "ri-play-line");
+            }
+        });
+
+        // Update button icon based on video state
+        video.addEventListener("play", () => {
+            videoIcon.classList.replace("ri-play-line", "ri-pause-line");
+        });
+
+        video.addEventListener("pause", () => {
+            videoIcon.classList.replace("ri-pause-line", "ri-play-line");
+        });
+    });
