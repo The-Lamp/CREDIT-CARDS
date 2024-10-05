@@ -172,22 +172,3 @@ themeButton.addEventListener('click', () => {
     localStorage.setItem('selected-theme', getCurrentTheme())
     localStorage.setItem('selected-icon', getCurrentIcon())
 })
-
-// auto swiper after 10 seconds 
-var swiper = new Swiper('.swiper-container', {
-        loop: true, // Loop the slides
-        autoplay: {
-            delay: 10000, // 10 second auto swipe delay
-            disableOnInteraction: false, // Autoplay resumes even after manual swipe
-        },
-        slidesPerView: 1, // Show one slide at a time
-        spaceBetween: 30, // Space between slides
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true, // Make pagination dots clickable
-        },
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-    });
