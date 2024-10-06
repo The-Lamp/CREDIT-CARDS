@@ -172,3 +172,14 @@ themeButton.addEventListener('click', () => {
     localStorage.setItem('selected-theme', getCurrentTheme())
     localStorage.setItem('selected-icon', getCurrentIcon())
 })
+
+function sendEmail(event) {
+        event.preventDefault(); // Form ko default action se rokta hai
+        var message = document.getElementById("userMessage").value;
+        var email = "thelamp2910@gmail.com";
+        var subject = "User Query"; // Tum subject jo bhi rakhna chaho rakh sakte ho
+        var body = encodeURIComponent(message);
+
+        // Ye line email client ko open karegi with autofilled email, subject, and message
+        window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+}
