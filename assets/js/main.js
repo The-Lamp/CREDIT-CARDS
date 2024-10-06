@@ -172,17 +172,3 @@ themeButton.addEventListener('click', () => {
     localStorage.setItem('selected-theme', getCurrentTheme())
     localStorage.setItem('selected-icon', getCurrentIcon())
 })
-
-function openGmail(event) {
-        event.preventDefault();  // Default form submit ko prevent karta hai
-        var message = document.getElementById("userMessage").value;
-        var email = "thelamp2910@gmail.com";
-        var subject = "User Query";  // Jo bhi subject tumhe chahiye
-        var body = encodeURIComponent(message);  // Message ko encode karta hai
-
-        // Gmail app ko specifically kholne ka code
-        var gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`;
-        
-        // New tab ya window me Gmail khulega
-        window.open(gmailUrl, '_blank');
-    
