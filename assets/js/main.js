@@ -29,7 +29,6 @@ function linkAction(){
 }
 navLink.forEach(n => n.addEventListener('click', linkAction))
 
-
 /*==================== CHANGE BACKGROUND HEADER ====================*/
 function scrollHeader(){
     const header = document.getElementById('header')
@@ -83,7 +82,6 @@ function finalVideo(){
 // ended, when the video ends
 videoFile.addEventListener('ended', finalVideo)
 
-
 /*==================== SHOW SCROLL UP ====================*/ 
 function scrollUp(){
     const scrollUp = document.getElementById('scroll-up');
@@ -118,7 +116,6 @@ const sr = ScrollReveal({
     duration: 2800,
     // reset: true,
 })
-
 
 sr.reveal(`.home__data, .home__social-link, .home__info,
            .discover__container,
@@ -172,3 +169,79 @@ themeButton.addEventListener('click', () => {
     localStorage.setItem('selected-theme', getCurrentTheme())
     localStorage.setItem('selected-icon', getCurrentIcon())
 })
+
+/*==================== CAROUSEL SLIDER ====================*/
+// Get DOM elements
+let nextDom = document.getElementById('next');
+let prevDom = document.getElementById('prev');
+
+let carouselDom = document.querySelector('.carousel');
+let SliderDom = carouselDom.querySelector('.carousel .list');
+let thumbnailBorderDom = document.querySelector('.carousel .thumbnail');
+let thumbnailItemsDom = thumbnailBorderDom.querySelectorAll('.item');
+let timeDom = document.querySelector('.carousel .time');
+
+thumbnailBorderDom.appendChild(thumbnailItemsDom[0]);
+
+let timeRunning = 3000; // Time for slider animations
+let timeAutoNext = 7000; // Time for automatic next slide
+
+let isSliding = false; // New flag to prevent overlapping transitions
+
+// Event listeners for next and prev buttons
+nextDom.onclick = function () {
+    if (!isSliding) {
+        showSlider('next');
+    }
+}
+
+prevDom.onclick = function () {
+    if (!isSliding) {
+        showSlider('prev');
+    }
+}
+
+let runTimeOut;
+let runNextAuto = setTimeout(() => {
+    nextDom.click();
+}, timeAutoNext);
+
+// Function to show next/previous slider
+function showSlider(type) {
+    let SliderItemsDom = SliderDom.querySelectorAll('.carousel .list .item');
+    let thumbnailItemsDom = document.querySelectorAll('.carousel .thumbnail .item');
+
+    // Disable button clicks while sliding
+    isSliding = true;
+
+    if (type === 'next') {
+        SliderDom.appendChild(SliderItemsDom[0]); // Move the first slider item to the end
+        thumbnailBorderDom.appendChild(thumbnailItemsDom[0]); // Move the first thumbnail item to the end
+        carouselDom.classList.add('next'); // Add next animation class
+    } else {
+        SliderDom.prepend(SliderItemsDom[SliderItemsDom.length - 1]); // Move the last slider item to the beginning
+        thumbnailBorderDom.prepend(thumbnailItemsDom[thumbnailItemsDom.length - 1]); // Move the last thumbnail item to the beginning
+        carouselDom.classList.add('prev'); // Add prev animation class
+    }
+
+    // Clear the animation class after the specified time
+    clearTimeout(runTimeOut);
+    runTimeOut = setTimeout(() => {
+        carouselDom.classList.remove('next');
+        carouselDom.classList.remove('prev');
+        isSliding = false; // Enable button clicks after the transition
+    }, timeRunning);
+
+    // Reset auto next slide timer
+    clearTimeout(runNextAuto);
+    runNextAuto = setTimeout(() => {
+        nextDom.click();
+    }, timeAutoNext);
+}
+
+// Additional code for buttons and image clicks
+document.querySelectorAll('.see-more, .subscribe, .clickable').forEach(function (element) {
+    element.addEventListener('click', function () {
+        window.location.href = 'example.html'; // Redirect to example.html
+    });
+});
